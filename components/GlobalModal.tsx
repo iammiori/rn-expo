@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import {
   Animated,
   Modal,
@@ -15,31 +15,32 @@ export function GlobalModals() {
   const { modalType, isVisible, closeModal } = useModalStore();
   const slideAnim = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    if (isVisible && modalType === "actionSheet") {
+  // 애니메이션 로직을 useCallback으로 메모이제이션
+  const startSlideAnimation = useCallback(
+    (toValue: number, onComplete?: () => void) => {
       Animated.timing(slideAnim, {
-        toValue: 1,
+        toValue,
         duration: 300,
         useNativeDriver: false,
-      }).start();
-    }
-    // NOTE: useRef로 생성된 값은 컴포넌트 생명주기 동안 절대 변하지 않기 때문에
-    // slideAnim 제외
-  }, [isVisible, modalType]);
+      }).start(onComplete);
+    },
+    [slideAnim]
+  );
 
-  const handleClose = () => {
+  // ✅ useEffect는 항상 최상위에서 호출 (=convention)
+  useEffect(() => {
+    if (!isVisible || modalType !== "actionSheet") return;
+
+    startSlideAnimation(1);
+  }, [isVisible, modalType, startSlideAnimation]);
+
+  const handleClose = useCallback(() => {
     if (modalType === "actionSheet") {
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start(() => {
-        closeModal();
-      });
+      startSlideAnimation(0, closeModal);
     } else {
       closeModal();
     }
-  };
+  }, [modalType, startSlideAnimation, closeModal]);
 
   if (!modalType) return null;
 

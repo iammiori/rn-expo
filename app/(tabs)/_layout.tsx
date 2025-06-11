@@ -1,43 +1,26 @@
+import { useModalStore } from "@/stores/modalStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Animated,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function TabLayout() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const slideAnim = useRef(new Animated.Value(0)).current;
+  // const [isModalVisible, setIsModalVisible] = useState(false);
+  // const slideAnim = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    if (isModalVisible) {
-      Animated.timing(slideAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-    }
-  }, [isModalVisible]);
+  const openActionSheet = useModalStore((state) => state.openActionSheet);
 
-  const handleAddPress = () => {
-    setIsModalVisible(true);
-  };
+  // useEffect(() => {
+  //   if (!isModalVisible) {
+  //     return;
+  //   }
 
-  const closeModal = () => {
-    Animated.timing(slideAnim, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: false,
-    }).start(() => {
-      setIsModalVisible(false);
-    });
-  };
+  //   Animated.timing(slideAnim, {
+  //     toValue: 1,
+  //     duration: 300,
+  //     useNativeDriver: false,
+  //   }).start();
+  // }, [isModalVisible]);
 
   return (
     <>
@@ -89,62 +72,11 @@ export default function TabLayout() {
 
       <TouchableOpacity
         style={styles.floatingButton}
-        onPress={handleAddPress}
+        onPress={openActionSheet}
         activeOpacity={0.8}
       >
         <Ionicons name="add" size={28} color="#ffffff" />
       </TouchableOpacity>
-
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={closeModal}
-      >
-        <Pressable style={styles.modalOverlay} onPress={closeModal}>
-          <Animated.View
-            style={[
-              styles.modalContent,
-              {
-                transform: [
-                  {
-                    translateY: slideAnim.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [300, 0],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          >
-            <View style={styles.modalHandle} />
-
-            <Text style={styles.modalTitle}>새로 만들기</Text>
-
-            <TouchableOpacity style={styles.actionItem} onPress={closeModal}>
-              <Ionicons name="document-outline" size={24} color="#4A9EFF" />
-              <Text style={styles.actionText}>새 작업</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.actionItem} onPress={closeModal}>
-              <Ionicons name="folder-outline" size={24} color="#4A9EFF" />
-              <Text style={styles.actionText}>새 프로젝트</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.actionItem} onPress={closeModal}>
-              <Ionicons name="camera-outline" size={24} color="#4A9EFF" />
-              <Text style={styles.actionText}>사진 촬영</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.actionItem, styles.cancelButton]}
-              onPress={closeModal}
-            >
-              <Text style={styles.cancelText}>취소</Text>
-            </TouchableOpacity>
-          </Animated.View>
-        </Pressable>
-      </Modal>
     </>
   );
 }

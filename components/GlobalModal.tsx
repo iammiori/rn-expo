@@ -23,6 +23,8 @@ export function GlobalModals() {
         useNativeDriver: false,
       }).start();
     }
+    // NOTE: useRef로 생성된 값은 컴포넌트 생명주기 동안 절대 변하지 않기 때문에
+    // slideAnim 제외
   }, [isVisible, modalType]);
 
   const handleClose = () => {

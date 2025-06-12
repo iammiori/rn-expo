@@ -1,26 +1,11 @@
 import { useModalStore } from "@/stores/modalStore";
 import { Ionicons } from "@expo/vector-icons";
+import Feather from "@expo/vector-icons/Feather";
 import { Tabs } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-
 export default function TabLayout() {
-  // const [isModalVisible, setIsModalVisible] = useState(false);
-  // const slideAnim = useRef(new Animated.Value(0)).current;
-
   const openActionSheet = useModalStore((state) => state.openActionSheet);
-
-  // useEffect(() => {
-  //   if (!isModalVisible) {
-  //     return;
-  //   }
-
-  //   Animated.timing(slideAnim, {
-  //     toValue: 1,
-  //     duration: 300,
-  //     useNativeDriver: false,
-  //   }).start();
-  // }, [isModalVisible]);
 
   return (
     <>
@@ -31,7 +16,6 @@ export default function TabLayout() {
             backgroundColor: "#2a2a2a",
             borderTopWidth: 0,
             height: 90,
-            paddingBottom: 25,
             paddingTop: 10,
           },
           tabBarActiveTintColor: "#4A9EFF",
@@ -47,13 +31,13 @@ export default function TabLayout() {
           options={{
             title: "Home",
             tabBarIcon: ({ color }) => (
-              <Ionicons name="folder-outline" size={24} color={color} />
+              <Feather name="inbox" size={24} color={color} />
             ),
           }}
         />
 
         <Tabs.Screen
-          name="explore"
+          name="(dummy)"
           options={{
             tabBarButton: () => <View style={{ flex: 1 }} />,
           }}
@@ -102,60 +86,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     zIndex: 1000,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "flex-end",
-  },
-  modalContent: {
-    backgroundColor: "#2a2a2a",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingTop: 20,
-    paddingBottom: 40,
-    paddingHorizontal: 20,
-    minHeight: 300,
-  },
-  modalHandle: {
-    width: 40,
-    height: 4,
-    backgroundColor: "#666",
-    borderRadius: 2,
-    alignSelf: "center",
-    marginBottom: 20,
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#fff",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  actionItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    backgroundColor: "#333",
-    borderRadius: 12,
-    marginBottom: 12,
-  },
-  actionText: {
-    fontSize: 16,
-    color: "#fff",
-    marginLeft: 16,
-    fontWeight: "500",
-  },
-  cancelButton: {
-    backgroundColor: "#444",
-    marginTop: 10,
-    justifyContent: "center",
-  },
-  cancelText: {
-    fontSize: 16,
-    color: "#fff",
-    fontWeight: "500",
-    textAlign: "center",
   },
 });

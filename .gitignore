@@ -37,3 +37,6 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# iOS
+ios/expopractice.xcworkspace/

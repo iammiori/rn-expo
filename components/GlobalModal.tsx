@@ -1,3 +1,4 @@
+import { useModalStore } from "@/stores/modalStore";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useRef } from "react";
 import {
@@ -9,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useModalStore } from "../stores/modalStore";
 
 export function GlobalModals() {
   const { modalType, isVisible, closeModal } = useModalStore();

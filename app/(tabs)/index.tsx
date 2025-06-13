@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -20,6 +19,7 @@ interface Task {
   hasFlag?: boolean;
   hasMenu?: boolean;
 }
+
 export default function HomeScreen() {
   const [tasks, setTasks] = useState<Task[]>([
     {
@@ -127,59 +127,71 @@ export default function HomeScreen() {
   );
 
   const renderTask = (task: Task) => (
-    <TouchableOpacity key={task.id} style={styles.taskItem} activeOpacity={0.7}>
+    <TouchableOpacity
+      key={task.id}
+      className="flex-row items-start py-3 px-1 gap-3"
+      activeOpacity={0.7}
+    >
       <TouchableOpacity
-        style={[
-          styles.checkbox,
-          {
-            borderColor: task.color,
-            backgroundColor: task.completed ? task.color : "transparent",
-          },
-        ]}
+        className="w-5 h-5 rounded border-2 justify-center items-center mt-0.5"
+        style={{
+          borderColor: task.color,
+          backgroundColor: task.completed ? task.color : "transparent",
+        }}
         onPress={() => toggleTask(task.id)}
       >
-        {task.completed && <Text style={styles.checkmark}>✓</Text>}
+        {task.completed && (
+          <Text className="text-white text-xs font-bold">✓</Text>
+        )}
       </TouchableOpacity>
 
-      <View style={styles.taskContent}>
+      <View className="flex-1">
         <Text
-          style={[styles.taskTitle, task.completed && styles.completedTask]}
+          className={`text-base leading-6 ${
+            task.completed ? "line-through text-gray-500" : "text-white"
+          }`}
           numberOfLines={2}
         >
           {task.title}
         </Text>
       </View>
 
-      <View style={styles.taskActions}>
-        {task.date && <Text style={styles.taskDate}>{task.date}</Text>}
+      <View className="flex-row items-center gap-2">
+        {task.date && (
+          <Text className="text-sm text-orange-600 font-medium">
+            {task.date}
+          </Text>
+        )}
         {task.hasMenu && (
-          <MoreHorizontal size={16} color="#666" style={styles.menuIcon} />
+          <MoreHorizontal size={16} color="#666" className="ml-1" />
         )}
-        {task.hasFlag && (
-          <Flag size={14} color="#FF5722" style={styles.flagIcon} />
-        )}
+        {task.hasFlag && <Flag size={14} color="#FF5722" className="ml-0.5" />}
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex-1 bg-neutral-900">
       <StatusBar barStyle="light-content" backgroundColor="#1a1a1a" />
 
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Inbox</Text>
+      <View className="flex-row justify-between items-center px-5 py-4 bg-neutral-900">
+        <Text className="text-3xl font-semibold text-white">Inbox</Text>
         <TouchableOpacity>
           <Menu size={24} color="#fff" />
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView className="flex-1 px-5" showsVerticalScrollIndicator={false}>
         {overdueCount > 0 && (
-          <View style={styles.section}>
-            <TouchableOpacity style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Overdue</Text>
-              <View style={styles.sectionTitleRight}>
-                <Text style={styles.overdueCount}>{overdueCount}</Text>
+          <View className="mb-5">
+            <TouchableOpacity className="flex-row justify-between items-center py-3 px-4 bg-neutral-800 rounded-lg mb-2">
+              <Text className="text-base font-medium text-orange-600">
+                Overdue
+              </Text>
+              <View className="flex-row items-center gap-2">
+                <Text className="text-sm text-gray-500 bg-neutral-700 px-2 py-0.5 rounded-full overflow-hidden">
+                  {overdueCount}
+                </Text>
                 <ChevronDown size={16} color="#666" />
               </View>
             </TouchableOpacity>
@@ -188,115 +200,10 @@ export default function HomeScreen() {
           </View>
         )}
 
-        <View style={styles.section}>
+        <View className="mb-5">
           {tasks.filter((task) => !task.overdue).map(renderTask)}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#1a1a1a",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: "#1a1a1a",
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: "600",
-    color: "#fff",
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    backgroundColor: "#2a2a2a",
-    borderRadius: 8,
-    marginBottom: 8,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#FF5722",
-  },
-  sectionTitleRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  overdueCount: {
-    fontSize: 14,
-    color: "#666",
-    backgroundColor: "#333",
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 10,
-    overflow: "hidden",
-  },
-  taskItem: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    paddingVertical: 12,
-    paddingHorizontal: 4,
-    gap: 12,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    borderWidth: 2,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 2,
-  },
-  checkmark: {
-    color: "#fff",
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  taskContent: {
-    flex: 1,
-  },
-  taskTitle: {
-    fontSize: 16,
-    color: "#fff",
-    lineHeight: 22,
-  },
-  completedTask: {
-    textDecorationLine: "line-through",
-    color: "#666",
-  },
-  taskActions: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  taskDate: {
-    fontSize: 14,
-    color: "#FF5722",
-    fontWeight: "500",
-  },
-  menuIcon: {
-    marginLeft: 4,
-  },
-  flagIcon: {
-    marginLeft: 2,
-  },
-});

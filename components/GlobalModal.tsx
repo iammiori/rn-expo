@@ -1,15 +1,7 @@
 import { useModalStore } from "@/stores/modalStore";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useRef } from "react";
-import {
-  Animated,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export function GlobalModals() {
   const { modalType, isVisible, closeModal } = useModalStore();
@@ -54,7 +46,10 @@ export function GlobalModals() {
           visible={isVisible}
           onRequestClose={handleClose}
         >
-          <Pressable style={styles.modalOverlay} onPress={handleClose}>
+          <Pressable
+            style={styles.modalOverlay}
+            onPress={handleClose}
+          >
             <Animated.View
               style={[
                 styles.modalContent,
@@ -74,18 +69,39 @@ export function GlobalModals() {
 
               <Text style={styles.modalTitle}>새로 만들기</Text>
 
-              <TouchableOpacity style={styles.actionItem} onPress={handleClose}>
-                <Ionicons name="document-outline" size={24} color="#4A9EFF" />
+              <TouchableOpacity
+                style={styles.actionItem}
+                onPress={handleClose}
+              >
+                <Ionicons
+                  name="document-outline"
+                  size={24}
+                  color="#4A9EFF"
+                />
                 <Text style={styles.actionText}>새 작업</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.actionItem} onPress={handleClose}>
-                <Ionicons name="folder-outline" size={24} color="#4A9EFF" />
+              <TouchableOpacity
+                style={styles.actionItem}
+                onPress={handleClose}
+              >
+                <Ionicons
+                  name="folder-outline"
+                  size={24}
+                  color="#4A9EFF"
+                />
                 <Text style={styles.actionText}>새 프로젝트</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.actionItem} onPress={handleClose}>
-                <Ionicons name="camera-outline" size={24} color="#4A9EFF" />
+              <TouchableOpacity
+                style={styles.actionItem}
+                onPress={handleClose}
+              >
+                <Ionicons
+                  name="camera-outline"
+                  size={24}
+                  color="#4A9EFF"
+                />
                 <Text style={styles.actionText}>사진 촬영</Text>
               </TouchableOpacity>
 
@@ -111,9 +127,7 @@ export function GlobalModals() {
           <View style={styles.dialogOverlay}>
             <View style={styles.dialogContent}>
               <Text style={styles.dialogTitle}>알림</Text>
-              <Text style={styles.dialogMessage}>
-                이것은 예시 다이얼로그입니다.
-              </Text>
+              <Text style={styles.dialogMessage}>이것은 예시 다이얼로그입니다.</Text>
               <TouchableOpacity
                 style={styles.dialogButton}
                 onPress={handleClose}

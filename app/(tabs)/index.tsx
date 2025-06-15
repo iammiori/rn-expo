@@ -1,13 +1,6 @@
 import { ChevronDown, Flag, Menu, MoreHorizontal } from "lucide-react-native";
 import React, { useMemo, useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 
 interface Task {
   id: number;
@@ -41,8 +34,7 @@ export default function HomeScreen() {
     },
     {
       id: 3,
-      title:
-        "Figma ipsum component variant main layer. Select inspect object ed...",
+      title: "Figma ipsum component variant main layer. Select inspect object ed...",
       completed: false,
       date: "1 mar",
       color: "#9C27B0",
@@ -115,16 +107,11 @@ export default function HomeScreen() {
 
   const toggleTask = (id: number) => {
     setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
+      tasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task))
     );
   };
 
-  const overdueCount = useMemo(
-    () => tasks.filter((task) => task.overdue).length,
-    [tasks]
-  );
+  const overdueCount = useMemo(() => tasks.filter((task) => task.overdue).length, [tasks]);
 
   const renderTask = (task: Task) => (
     <TouchableOpacity
@@ -140,9 +127,7 @@ export default function HomeScreen() {
         }}
         onPress={() => toggleTask(task.id)}
       >
-        {task.completed && (
-          <Text className="text-white text-xs font-bold">✓</Text>
-        )}
+        {task.completed && <Text className="text-white text-xs font-bold">✓</Text>}
       </TouchableOpacity>
 
       <View className="flex-1">
@@ -157,42 +142,58 @@ export default function HomeScreen() {
       </View>
 
       <View className="flex-row items-center gap-2">
-        {task.date && (
-          <Text className="text-sm text-orange-600 font-medium">
-            {task.date}
-          </Text>
-        )}
+        {task.date && <Text className="text-sm text-orange-600 font-medium">{task.date}</Text>}
         {task.hasMenu && (
-          <MoreHorizontal size={16} color="#666" className="ml-1" />
+          <MoreHorizontal
+            size={16}
+            color="#666"
+            className="ml-1"
+          />
         )}
-        {task.hasFlag && <Flag size={14} color="#FF5722" className="ml-0.5" />}
+        {task.hasFlag && (
+          <Flag
+            size={14}
+            color="#FF5722"
+            className="ml-0.5"
+          />
+        )}
       </View>
     </TouchableOpacity>
   );
 
   return (
     <SafeAreaView className="flex-1 bg-neutral-900">
-      <StatusBar barStyle="light-content" backgroundColor="#1a1a1a" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="#1a1a1a"
+      />
 
       <View className="flex-row justify-between items-center px-5 py-4 bg-neutral-900">
         <Text className="text-3xl font-semibold text-white">Inbox</Text>
         <TouchableOpacity>
-          <Menu size={24} color="#fff" />
+          <Menu
+            size={24}
+            color="#fff"
+          />
         </TouchableOpacity>
       </View>
 
-      <ScrollView className="flex-1 px-5" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="flex-1 px-5"
+        showsVerticalScrollIndicator={false}
+      >
         {overdueCount > 0 && (
           <View className="mb-5">
             <TouchableOpacity className="flex-row justify-between items-center py-3 px-4 bg-neutral-800 rounded-lg mb-2">
-              <Text className="text-base font-medium text-orange-600">
-                Overdue
-              </Text>
+              <Text className="text-base font-medium text-orange-600">Overdue</Text>
               <View className="flex-row items-center gap-2">
                 <Text className="text-sm text-gray-500 bg-neutral-700 px-2 py-0.5 rounded-full overflow-hidden">
                   {overdueCount}
                 </Text>
-                <ChevronDown size={16} color="#666" />
+                <ChevronDown
+                  size={16}
+                  color="#666"
+                />
               </View>
             </TouchableOpacity>
 
@@ -200,9 +201,7 @@ export default function HomeScreen() {
           </View>
         )}
 
-        <View className="mb-5">
-          {tasks.filter((task) => !task.overdue).map(renderTask)}
-        </View>
+        <View className="mb-5">{tasks.filter((task) => !task.overdue).map(renderTask)}</View>
       </ScrollView>
     </SafeAreaView>
   );

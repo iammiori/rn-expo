@@ -31,7 +31,11 @@ export default function TabLayout() {
           options={{
             title: "Home",
             tabBarIcon: ({ color }) => (
-              <Feather name="inbox" size={24} color={color} />
+              <Feather
+                name="inbox"
+                size={24}
+                color={color}
+              />
             ),
           }}
         />
@@ -48,7 +52,11 @@ export default function TabLayout() {
           options={{
             title: "바보임에틀림없어",
             tabBarIcon: ({ color }) => (
-              <Ionicons name="ellipsis-horizontal" size={24} color={color} />
+              <Ionicons
+                name="ellipsis-horizontal"
+                size={24}
+                color={color}
+              />
             ),
           }}
         />
@@ -59,7 +67,11 @@ export default function TabLayout() {
         onPress={openActionSheet}
         activeOpacity={0.8}
       >
-        <Ionicons name="add" size={28} color="#ffffff" />
+        <Ionicons
+          name="add"
+          size={28}
+          color="#ffffff"
+        />
       </TouchableOpacity>
     </>
   );

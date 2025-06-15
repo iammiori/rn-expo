@@ -1,6 +1,6 @@
 import { useModalStore } from "@/stores/modalStore";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Animated, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export function GlobalModals() {

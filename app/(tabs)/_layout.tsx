@@ -2,8 +2,8 @@ import { useModalStore } from "@/stores/modalStore";
 import { Ionicons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 import { Tabs } from "expo-router";
-import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Pressable, View } from "react-native";
+
 export default function TabLayout() {
   const openActionSheet = useModalStore((state) => state.openActionSheet);
 
@@ -62,41 +62,29 @@ export default function TabLayout() {
         />
       </Tabs>
 
-      <TouchableOpacity
-        style={styles.floatingButton}
+      <Pressable
+        className="absolute bottom-8 left-1/2 -ml-7 w-14 h-14 rounded-full bg-gray-600 justify-center items-center shadow-lg z-[1000]"
         onPress={openActionSheet}
-        activeOpacity={0.8}
+        style={({ pressed }) => [
+          {
+            opacity: pressed ? 0.8 : 1,
+            elevation: 8,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.3,
+            shadowRadius: 8,
+          },
+        ]}
       >
         <Ionicons
           name="add"
           size={28}
           color="#ffffff"
         />
-      </TouchableOpacity>
+      </Pressable>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  floatingButton: {
-    position: "absolute",
-    bottom: 30, // 일단은 휴리스틱, safe area 고려해야할듯
-    left: "50%",
-    marginLeft: -28,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: "#666666",
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 8,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    zIndex: 1000,
-  },
-});

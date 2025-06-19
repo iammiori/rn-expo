@@ -1,5 +1,5 @@
 import { ChevronDown, Flag, Menu, MoreHorizontal } from "lucide-react-native";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 
 interface Task {
